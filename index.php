@@ -8,27 +8,33 @@ $events = get_events(1, 5);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Ensure the footer sticks to the bottom */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">Event Management</a>
-            <div class="navbar-nav ms-auto">
-                <?php if (is_logged_in()): ?>
-                    <a class="nav-link" href="dashboard.php">Dashboard</a>
-                    <a class="nav-link" href="logout.php">Logout</a>
-                <?php else: ?>
-                    <a class="nav-link" href="login.php">Login</a>
-                    <a class="nav-link" href="register.php">Register</a>
-                <?php endif; ?>
-            </div>
-        </div>
-    </nav>
+    <?php require_once 'navbar.php'; ?>
 
     <div class="container mt-4">
         <h1>Upcoming Events</h1>
@@ -60,4 +66,5 @@ $events = get_events(1, 5);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

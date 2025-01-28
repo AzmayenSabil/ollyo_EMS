@@ -49,32 +49,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Event - <?= htmlspecialchars($event['name']) ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .event-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+
+        .form-control,
+        .form-textarea {
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .edit-cancel-btn {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
 </head>
 
 <body>
+    <?php require_once 'navbar.php'; ?>
 
-    <div class="container">
+    <div class="event-container">
         <h2>Edit Event</h2>
         <form method="POST" action="">
-            <label for="name">Event Name:</label>
-            <input type="text" id="name" name="name" value="<?= htmlspecialchars($event['name']) ?>" required>
+            <div class="mb-3">
+                <label for="name" class="form-label">Event Name:</label>
+                <input type="text" id="name" name="name" value="<?= htmlspecialchars($event['name']) ?>" class="form-control" required>
+            </div>
 
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" value="<?= $event['date'] ?>" required>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" id="date" name="date" value="<?= $event['date'] ?>" class="form-control" required>
+            </div>
 
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" value="<?= htmlspecialchars($event['location']) ?>" required>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" id="location" name="location" value="<?= htmlspecialchars($event['location']) ?>" class="form-control" required>
+            </div>
 
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required><?= htmlspecialchars($event['description']) ?></textarea>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required><?= htmlspecialchars($event['description']) ?></textarea>
+            </div>
 
-            <button type="submit">Update Event</button>
+            <button type="submit" class="btn btn-primary">Update Event</button>
         </form>
-        <br>
-        <a href="view_event.php?id=<?= $event_id ?>">Cancel</a>
+
+        <a class="edit-cancel-btn" href="view_event.php?id=<?= $event_id ?>">Cancel</a>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
