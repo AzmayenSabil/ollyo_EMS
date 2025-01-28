@@ -30,6 +30,11 @@ function login_user($username, $password) {
     return false;
 }
 
+function get_user_id(){
+    // Assuming you store the user ID in the session after login
+    return isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+}
+
 function is_logged_in() {
     return isset($_SESSION['user_id']);
 }

@@ -52,11 +52,26 @@ $events = get_events(1, 5);
                                     Location: <?php echo htmlspecialchars($event['location']); ?>
                                 </small>
                             </p>
+
                             <?php if (is_logged_in()): ?>
-                                <a href="register_event.php?id=<?php echo $event['id']; ?>" class="btn btn-primary">Register</a>
+                                <?php if (is_user_registered($event['id'], get_user_id())): ?>
+                                    <button class="btn btn-secondary" disabled>Registered</button>
+                                <?php else: ?>
+                                    <a href="register_event.php?id=<?php echo $event['id']; ?>" class="btn btn-primary">Register</a>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <a href="login.php" class="btn btn-secondary">Login to Register</a>
                             <?php endif; ?>
+
+                            <?php if (isset($_GET['registration']) && isset($_GET['event_id']) && $_GET['event_id'] == $event['id']): ?>
+                                <?php if ($_GET['registration'] === 'success'): ?>
+                                    <div class="alert alert-success">You have successfully registered for the event!</div>
+                                <?php elseif ($_GET['registration'] === 'failed'): ?>
+                                    <div class="alert alert-danger">Registration failed. The event might be full or there was an issue.</div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+
+
                         </div>
                     </div>
                 </div>

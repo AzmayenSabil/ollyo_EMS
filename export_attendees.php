@@ -3,32 +3,45 @@ require_once 'config/database.php';
 require_once 'includes/auth.php';
 require_once 'includes/event_functions.php';
 
-if (!is_logged_in() || (!is_admin() && $_GET['created_by'] != $_SESSION['user_id'])) {
+if (!is_logged_in()) {
     header('Location: login.php');
     exit();
 }
 
+// Check if an event ID is provided
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    die("Event ID is required.");
+}
+
 $event_id = (int)$_GET['id'];
-$attendees = get_event_attendees($event_id);
 
-// Set headers for CSV download
+// Fetch event attendees from the database
+$attendees = get_attendees_by_event($event_id);
+
+if (empty($attendees)) {
+    die("No attendees found for this event.");
+}
+
+// Create CSV headers
 header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="event_attendees.csv"');
+header('Content-Disposition: attachment; filename="attendees_' . $event_id . '.csv"');
 
-// Create CSV file
+// Open a file pointer to PHP output (instead of a file)
 $output = fopen('php://output', 'w');
 
-// Add CSV headers
-fputcsv($output, ['Username', 'Email', 'Registration Date']);
+// Write the column headers to the CSV file
+fputcsv($output, ['Name', 'Email', 'Phone', 'Registration Date']);
 
-// Add attendee data
+// Write the data for each attendee
 foreach ($attendees as $attendee) {
     fputcsv($output, [
-        $attendee['username'],
+        $attendee['name'],
         $attendee['email'],
-        $attendee['registration_date']
+        $attendee['phone'],
+        $attendee['registration_date'],
     ]);
 }
 
+// Close the file pointer
 fclose($output);
-?>
+exit();
