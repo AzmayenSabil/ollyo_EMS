@@ -29,6 +29,14 @@ switch ($request) {
         $controller = new EventController();
         $controller->createEvent();
         break;
+    case '/event/view':
+        $controller = new EventController();
+        $controller->viewEvent();
+        break;
+    case '/event/edit':
+        $controller = new EventController();
+        $controller->editEvent();
+        break;
     case '/event/register':
         $controller = new AttendeeController();
         $controller->registerAttendee();

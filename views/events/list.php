@@ -78,7 +78,7 @@ if (isset($_SESSION["user_id"])) {
                             btn.innerText = "Registered";
                             btn.disabled = true;
                             // Redirect to the event view page after successful registration
-                            window.location.href = "<?php echo $baseUrl; ?>/event/view?id=" + eventId;
+                            window.location.href = "<?php echo $baseUrl; ?>/events";
                         } else {
                             alert(data.message);
                         }

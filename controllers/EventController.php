@@ -55,4 +55,79 @@ class EventController
             include "views/events/create.php";
         }
     }
+
+    public function viewEvent()
+    {
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+            echo "Invalid event ID.";
+            return;
+        }
+
+        $event_id = intval($_GET['id']);
+        $eventModel = new Event();
+        $event = $eventModel->getEventById($event_id);
+
+        if (!$event) {
+            echo "Event not found.";
+            return;
+        }
+
+        include 'views/events/view.php';
+    }
+
+    public function editEvent()
+    {
+        $baseFolder = '/ollyo_EMS'; // Base folder for your application
+
+        // Check if the event ID is set and valid
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+            echo "Invalid event ID.";
+            return;
+        }
+
+        $event_id = intval($_GET['id']); // Sanitize the event ID
+
+        // Create the Event model instance
+        $eventModel = new Event();
+
+        // Fetch the event details from the database
+        $event = $eventModel->getEventById($event_id);
+
+        // Check if the event exists
+        if (!$event) {
+            echo "Event not found.";
+            return;
+        }
+
+        // If the form is submitted, handle the update process
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Sanitize and validate form inputs
+            $name = trim($_POST['name'] ?? '');
+            $date = trim($_POST['date'] ?? '');
+            $time = trim($_POST['time'] ?? '');
+            $location = trim($_POST['location'] ?? '');
+            $description = trim($_POST['description'] ?? '');
+
+            // Perform basic validation
+            if (empty($name) || empty($date) || empty($time) || empty($location)) {
+                echo "All fields are required.";
+                return;
+            }
+
+            // Update the event details
+            $updateResult = $eventModel->updateEvent($event_id, $name, $date, $time, $location, $description);
+
+            if ($updateResult) {
+                // Redirect to the event view page on success
+                header('Location: ' . $baseFolder . '/events/view?id=' . $event_id);
+                exit();
+            } else {
+                echo "Failed to update event.";
+            }
+        }
+
+        // Include the edit view with event details to pre-populate the form
+        include 'views/events/edit.php';
+    }
+
 }
