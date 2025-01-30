@@ -13,6 +13,11 @@ if (isset($_SESSION["user_id"])) {
 }
 ?>
 
+<script>
+    var registeredEvents = <?php echo json_encode($registeredEvents); ?>;
+    console.log("Fetched Events:", registeredEvents); // Log the events to the console
+</script>
+
 <h2>Upcoming Events</h2>
 <table class="table">
     <thead>
@@ -39,8 +44,8 @@ if (isset($_SESSION["user_id"])) {
                         <!-- Register Button (If Not Already Registered) -->
                         <button class="btn btn-success register-btn"
                             data-event-id="<?php echo $event["id"]; ?>"
-                            <?php echo in_array($event["id"], $registeredEvents) ? 'disabled' : ''; ?>>
-                            <?php echo in_array($event["id"], $registeredEvents) ? 'Registered' : 'Register'; ?>
+                            <?php echo in_array($event["id"], array_column($registeredEvents, 'id')) ? 'disabled' : ''; ?>>
+                            <?php echo in_array($event["id"], array_column($registeredEvents, 'id')) ? 'Registered' : 'Register'; ?>
                         </button>
 
                         <?php if ($is_admin == 1 || $event["created_by"] == $user_id): ?>
@@ -75,10 +80,18 @@ if (isset($_SESSION["user_id"])) {
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
+                            // Update the button text and disable it after successful registration
                             btn.innerText = "Registered";
                             btn.disabled = true;
-                            // Redirect to the event view page after successful registration
-                            window.location.href = "<?php echo $baseUrl; ?>/events";
+
+                            // Optionally, update registered events list dynamically without reload
+                            registeredEvents.push({
+                                id: eventId
+                            });
+                            console.log("Updated Registered Events:", registeredEvents);
+
+                            // You can optionally update the button on the frontend dynamically
+                            // or even remove the button if you want it to disappear after registration.
                         } else {
                             alert(data.message);
                         }
