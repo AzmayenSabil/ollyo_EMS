@@ -30,29 +30,28 @@ class AttendeeController
         }
     }
 
-
-    public function listAttendees($event_id)
+    public function listEventDetails($event_id)
     {
         $attendeeModel = new Attendee();
-        $attendees = $attendeeModel->getAttendeesByEvent($event_id);
+        $eventDetails = $attendeeModel->getEventDetails($event_id); // Fetch everything related to the event
 
-        include "views/attendees/list.php";
+        include "views/events/details.php"; // Updated to a more relevant view
     }
 
-    public function exportAttendees($event_id)
+    public function exportEventDetails($event_id)
     {
         $attendeeModel = new Attendee();
-        $attendees = $attendeeModel->getAttendeesByEvent($event_id);
+        $eventDetails = $attendeeModel->getEventDetails($event_id); // Fetch all related data
 
         // Implement logic to export the list (for example, CSV)
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="attendees.csv"');
+        header('Content-Disposition: attachment; filename="event_details.csv"');
 
         $output = fopen('php://output', 'w');
-        fputcsv($output, ['ID', 'Name', 'Email']);
+        fputcsv($output, ['Event Name', 'Date', 'Time', 'Location', 'Capacity', 'Created By', 'Attendee Name', 'Attendee Email']);
 
-        foreach ($attendees as $attendee) {
-            fputcsv($output, $attendee);
+        foreach ($eventDetails as $detail) {
+            fputcsv($output, $detail);
         }
 
         fclose($output);
