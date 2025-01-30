@@ -22,7 +22,8 @@
         <div class="container">
             <a class="navbar-brand" href="<?php echo $baseUrl; ?>/events">Event Management</a>
             <ul class="navbar-nav">
-                <?php if (isset($_SESSION["user"])): ?>
+                <?php if (isset($_SESSION["user_id"])): // Check if user is logged in 
+                ?>
                     <li class="nav-item"><a class="nav-link" href="<?php echo $baseUrl; ?>/event/create">Create Event</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo $baseUrl; ?>/logout">Logout</a></li>
                 <?php else: ?>

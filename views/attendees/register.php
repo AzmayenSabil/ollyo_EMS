@@ -4,28 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Registration</title>
+    <title>Registration Confirmation</title>
 </head>
 
 <body>
-    <h1>Register for Event</h1>
+    <h1>Registration Status</h1>
 
-    <?php if (isset($successMessage)): ?>
+    <?php if (!empty($successMessage)): ?>
         <div style="color: green;">
             <p><?php echo $successMessage; ?></p>
         </div>
-    <?php elseif (isset($errorMessage)): ?>
+        <script>
+            setTimeout(function() {
+                window.location.href = "/ollyo_EMS/events";
+            }, 3000); // Redirect to event list after 3 seconds
+        </script>
+    <?php elseif (!empty($errorMessage)): ?>
         <div style="color: red;">
             <p><?php echo $errorMessage; ?></p>
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="">
-        <label for="event_id">Event ID:</label>
-        <input type="text" id="event_id" name="event_id" required>
-        <br>
-        <button type="submit">Register</button>
-    </form>
 </body>
 
 </html>

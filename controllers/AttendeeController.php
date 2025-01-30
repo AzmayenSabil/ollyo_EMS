@@ -5,14 +5,12 @@ class AttendeeController
 {
     public function registerAttendee()
     {
-        // Check if session is already started
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Check if user is logged in
         if (!isset($_SESSION["user_id"])) {
-            header("Location: /ollyo_EMS/login");
+            echo json_encode(["success" => false, "message" => "You need to login first."]);
             exit();
         }
 
@@ -23,22 +21,41 @@ class AttendeeController
             $attendeeModel = new Attendee();
             $result = $attendeeModel->registerForEvent($event_id, $user_id);
 
-            // Check if registration was successful
             if ($result) {
-                $successMessage = "You have successfully registered for the event!";
+                echo json_encode(["success" => true, "message" => "Successfully registered!"]);
             } else {
-                $errorMessage = "Failed to register for the event. Please try again.";
+                echo json_encode(["success" => false, "message" => "Failed to register, try again."]);
             }
+            exit();
         }
-
-        // Use an absolute path for including the view file
-        include __DIR__ . '/../views/attendees/register.php';  // Ensure the path is correct
     }
 
-    public function listAttendees()
+
+    public function listAttendees($event_id)
     {
         $attendeeModel = new Attendee();
-        $attendees = $attendeeModel->getAllAttendees();
+        $attendees = $attendeeModel->getAttendeesByEvent($event_id);
+
         include "views/attendees/list.php";
+    }
+
+    public function exportAttendees($event_id)
+    {
+        $attendeeModel = new Attendee();
+        $attendees = $attendeeModel->getAttendeesByEvent($event_id);
+
+        // Implement logic to export the list (for example, CSV)
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="attendees.csv"');
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['ID', 'Name', 'Email']);
+
+        foreach ($attendees as $attendee) {
+            fputcsv($output, $attendee);
+        }
+
+        fclose($output);
+        exit();
     }
 }

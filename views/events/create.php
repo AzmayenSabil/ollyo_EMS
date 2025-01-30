@@ -1,4 +1,6 @@
-<?php include '../layouts/header.php'; ?>
+<?php
+include __DIR__ . '../../layouts/header.php'; ?>
+
 <h2>Create Event</h2>
 <form method="POST" action="<?php echo $baseUrl; ?>/event/create">
     <input type="text" name="name" placeholder="Event Name" required>
@@ -10,4 +12,4 @@
     <button type="submit">Create Event</button>
 </form>
 
-<?php include '../layouts/footer.php'; ?>
+<?php include __DIR__ . '../../layouts/footer.php'; ?>
