@@ -35,7 +35,7 @@ switch ($request) {
         break;
     case '/attendees':
         $controller = new AttendeeController();
-        $controller->listAttendees();
+        $controller->getAttendees();
         break;
     case '/login':
         $controller = new AuthController();

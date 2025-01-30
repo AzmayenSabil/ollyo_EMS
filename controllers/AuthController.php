@@ -45,6 +45,7 @@ class AuthController
                 // Set session variables for user
                 $_SESSION["user_id"] = $user["id"];
                 $_SESSION["username"] = $user["username"];
+                $_SESSION["is_admin"] = $user["is_admin"];
 
                 // Redirect to events page after successful login with ollyo_EMS prefix
                 header("Location: /ollyo_EMS/events");
