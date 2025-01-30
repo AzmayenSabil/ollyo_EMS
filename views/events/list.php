@@ -18,50 +18,58 @@ if (isset($_SESSION["user_id"])) {
     console.log("Fetched Events:", registeredEvents); // Log the events to the console
 </script>
 
-<h2>Upcoming Events</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Location</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($event = $events->fetch_assoc()): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($event["name"]); ?></td>
-                <td><?php echo htmlspecialchars($event["date"]); ?></td>
-                <td><?php echo htmlspecialchars($event["time"]); ?></td>
-                <td><?php echo htmlspecialchars($event["location"]); ?></td>
-                <td>
-                    <!-- View Button (Always Visible) -->
-                    <a href="<?php echo $baseUrl; ?>/event/view?id=<?php echo $event["id"]; ?>" class="btn btn-info">View</a>
+<div class="d-flex flex-column min-vh-100">
+    <!-- Table Section: Positioned at the top -->
+    <div class="container flex-grow-1">
+        <h2 class="my-4">Upcoming Events</h2>
+        <div class="row justify-content-center">
+            <table class="table table-striped table-bordered shadow-sm rounded">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($event = $events->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($event["name"]); ?></td>
+                            <td><?php echo htmlspecialchars($event["date"]); ?></td>
+                            <td><?php echo htmlspecialchars($event["time"]); ?></td>
+                            <td><?php echo htmlspecialchars($event["location"]); ?></td>
+                            <td>
+                                <!-- View Button (Always Visible) -->
+                                <a href="<?php echo $baseUrl; ?>/event/view?id=<?php echo $event["id"]; ?>" class="btn btn-info btn-sm">View</a>
 
-                    <?php if ($user_id): ?>
-                        <!-- Register Button (If Not Already Registered) -->
-                        <button class="btn btn-success register-btn"
-                            data-event-id="<?php echo $event["id"]; ?>"
-                            <?php echo in_array($event["id"], array_column($registeredEvents, 'id')) ? 'disabled' : ''; ?>>
-                            <?php echo in_array($event["id"], array_column($registeredEvents, 'id')) ? 'Registered' : 'Register'; ?>
-                        </button>
+                                <?php if ($user_id): ?>
+                                    <!-- Register Button (If Not Already Registered) -->
+                                    <button class="btn btn-success btn-sm register-btn"
+                                        data-event-id="<?php echo $event["id"]; ?>"
+                                        <?php echo in_array($event["id"], array_column($registeredEvents, 'id')) ? 'disabled' : ''; ?>>
+                                        <?php echo in_array($event["id"], array_column($registeredEvents, 'id')) ? 'Registered' : 'Register'; ?>
+                                    </button>
 
-                        <?php if ($is_admin == 1 || $event["created_by"] == $user_id): ?>
-                            <!-- Show Edit & Export Buttons for Admins OR Event Creator -->
-                            <a href="<?php echo $baseUrl; ?>/event/edit?id=<?php echo $event["id"]; ?>" class="btn btn-warning">Edit</a>
-                            <a href="<?php echo $baseUrl; ?>/event/export?id=<?php echo $event["id"]; ?>" class="btn btn-secondary">Export List</a>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <!-- If Not Logged In, Show Login Button -->
-                        <a href="<?php echo $baseUrl; ?>/login" class="btn btn-primary">Login to Register</a>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+                                    <?php if ($is_admin == 1 || $event["created_by"] == $user_id): ?>
+                                        <!-- Show Edit & Export Buttons for Admins OR Event Creator -->
+                                        <a href="<?php echo $baseUrl; ?>/event/edit?id=<?php echo $event["id"]; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="<?php echo $baseUrl; ?>/event/export?event_id=<?php echo $event["id"]; ?>" class="btn btn-secondary btn-sm">Export List</a>
+
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <!-- If Not Logged In, Show Login Button -->
+                                    <a href="<?php echo $baseUrl; ?>/login" class="btn btn-primary btn-sm">Login to Register</a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

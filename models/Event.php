@@ -67,13 +67,29 @@ class Event
     {
         global $conn;
         $stmt = $conn->prepare("
-            SELECT users.id, users.name, users.email 
-            FROM attendees 
-            JOIN users ON attendees.user_id = users.id 
-            WHERE attendees.event_id = ?
-        ");
+        SELECT users.id, users.username, users.email
+        FROM registrations
+        JOIN users ON registrations.user_id = users.id
+        WHERE registrations.event_id = ?
+    ");
         $stmt->bind_param("i", $event_id);
         $stmt->execute();
         return $stmt->get_result();
     }
+
+    public function exportAttendeesToCSV($event_id)
+    {
+        global $conn;
+        $attendees = $this->getAttendeesByEventId($event_id);
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="attendees_event_' . $event_id . '.csv"');
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['ID', 'Name', 'Email']);
+        while ($attendee = $attendees->fetch_assoc()) {
+            fputcsv($output, [$attendee['id'], $attendee['username'], $attendee['email']]);
+        }
+        fclose($output);
+        exit();
+    }
+
 }

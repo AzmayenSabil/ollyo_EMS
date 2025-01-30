@@ -53,6 +53,10 @@ switch ($request) {
         $controller = new AuthController();
         $controller->register();
         break;
+    case '/event/export':
+        $controller = new EventController();
+        $controller->export();
+        break;
     case '/logout':
         session_destroy();
         header('Location: ' . $baseFolder . '/login');

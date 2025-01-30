@@ -119,7 +119,7 @@ class EventController
 
             if ($updateResult) {
                 // Redirect to the event view page on success
-                header('Location: ' . $baseFolder . '/events/view?id=' . $event_id);
+                header('Location: ' . $baseFolder . '/events');
                 exit();
             } else {
                 echo "Failed to update event.";
@@ -129,5 +129,19 @@ class EventController
         // Include the edit view with event details to pre-populate the form
         include 'views/events/edit.php';
     }
+    public function export()
+    {
+        // Check if the event_id is set in the query parameters
+        if (isset($_GET['event_id'])) {
+            $event_id = $_GET['event_id'];
 
+            // Create the Event model instance
+            $eventModel = new Event();
+
+            // Export the attendees list as CSV
+            $eventModel->exportAttendeesToCSV($event_id);
+        } else {
+            echo "Event ID is missing!";
+        }
+    }
 }
