@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Set base directory
+RewriteBase /ollyo_EMS/
+
+# Redirect everything except existing files and directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
