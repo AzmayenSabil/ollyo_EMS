@@ -1,112 +1,82 @@
 # OLLYO Event Management System
 
-A web-based event management system built with PHP and MySQL.
+A comprehensive web-based event management system built with PHP and MySQL, designed to streamline event organization and attendee management.
 
-## Features
+## 📸 Screenshots
 
-- **User Authentication**
-  - Login
-  - Register
-- **Event Management**
-  - Create new events
-  - View event details
-  - Edit own events
-  - Export attendee list (CSV) for own events
-- **Access Control**
-  - Only event creators can edit their events
-  - Only event creators can export attendee lists
-- **Security Implementation**
-  - Password hashing
-  - Prepared statements for database queries
-  - Session-based authentication
-  - Input validation and sanitization
-  - XSS prevention through HTML escaping
+### Landing Page
+[Landing Page Screenshot to be added]
 
-## Database Structure & Design Rationale
+### User Authentication
+[Login Page Screenshot to be added]
+[Register Page Screenshot to be added]
 
-### **Users Table** (`users`)
-```sql
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `is_admin` tinyint(1) DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-);
-```
-**Design Choices:**
-- `username` and `email` are **unique** to prevent duplicate accounts.
-- `password` is stored securely with hashing.
-- `is_admin` is a **boolean flag** (tinyint) for role-based access control.
-- `created_at` stores **registration timestamp**.
+### Event Management
+[Create Event Screenshot to be added]
+[View Event Screenshot to be added]
+[Edit Event Screenshot to be added]
 
-### **Events Table** (`events`)
-```sql
-CREATE TABLE `events` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `description` text,
-  `date` date NOT NULL,
-  `time` time NOT NULL,
-  `location` varchar(200) NOT NULL,
-  `max_capacity` int NOT NULL,
-  `created_by` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `created_by` (`created_by`),
-  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
-);
-```
-**Design Choices:**
-- `name`, `date`, `time`, `location` are required fields.
-- `max_capacity` ensures **event capacity management**.
-- `created_by` is a **foreign key** linking to `users` to track the creator.
-- `created_at` helps **log event creation timestamps**.
+## ✨ Features
 
-### **Registrations Table** (`registrations`)
-```sql
-CREATE TABLE `registrations` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `event_id` int DEFAULT NULL,
-  `user_id` int DEFAULT NULL,
-  `registration_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_registration` (`event_id`,`user_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
-  CONSTRAINT `registrations_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
-```
-**Design Choices:**
-- `event_id` and `user_id` create a **many-to-many relationship** between `users` and `events`.
-- `UNIQUE KEY (event_id, user_id)` ensures **one registration per user per event**.
-- Foreign keys maintain **referential integrity**.
-- `registration_date` automatically logs the registration timestamp.
+### User Authentication
+- Secure login system
+- User registration with email verification
+- Password recovery functionality
 
-## Requirements
+### Event Management
+- Create and publish new events
+- View comprehensive event details
+- Edit existing events
+- Real-time capacity tracking
+- Export attendee lists in CSV format
 
-- PHP 8.2.12
-- MySQL 8.0.32
+### Access Control
+- Role-based permissions system
+- Event creator privileges
+- Admin dashboard for system oversight
 
-## Installation
+### Security Implementation
+- Password hashing using modern algorithms
+- Prepared statements for SQL injection prevention
+- Session-based authentication
+- Comprehensive input validation
+- XSS prevention through HTML escaping
 
-1. Create a MySQL database named `event_management`.
-2. Update database configuration in `config/config.php`:
+## 🛠 Technical Requirements
+
+- PHP 8.2.12 or higher
+- MySQL 8.0.32 or higher
+- Apache/Nginx web server
+- mod_rewrite enabled
+
+## 📦 Installation
+
+1. **Database Setup**
+   ```sql
+   CREATE DATABASE event_management;
+   ```
+
+2. **Configuration**
+   - Navigate to `config/config.php`
+   - Update database credentials:
    ```php
    define('DB_HOST', 'localhost');
    define('DB_USER', 'your_username');
    define('DB_PASS', 'your_password');
    define('DB_NAME', 'event_management');
    ```
-3. Upload all files to your web server.
-4. Navigate to the project URL in your web browser.
-5. Register a new user account to start using the system.
 
-## Project Structure
+3. **File Deployment**
+   - Upload all files to your web server
+   - Ensure proper permissions are set
+   - Configure web server for PHP execution
+
+4. **Initial Setup**
+   - Navigate to the project URL
+   - Register an admin account
+   - Begin creating and managing events
+
+## 📁 Project Structure
 
 ```
 OLLYO_EMS/
@@ -140,16 +110,90 @@ OLLYO_EMS/
 └── routes.php
 ```
 
+## 🛡️ Security Features
 
-## Images
+### Database Security
+- Prepared statements for all queries
+- Input validation and sanitization
+- Parameterized queries
 
-Login Page: [Insert Image Placeholder]
-Register Page: [Insert Image Placeholder]
-Create Event Page: [Insert Image Placeholder]
-View Event Page: [Insert Image Placeholder]
-Edit Event Page: [Insert Image Placeholder]
-Landing Page: [Insert Image Placeholder]
+### User Authentication
+- Secure password hashing
+- Session management
+- CSRF protection
+- Rate limiting on login attempts
 
-## Credits
+### Access Control
+- Role-based permissions
+- Event ownership verification
+- Secure file handling
 
-Built as a task for OLLYO.
+## 💾 Database Structure
+
+### Users Table
+```sql
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `is_admin` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+);
+```
+
+### Events Table
+```sql
+CREATE TABLE `events` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `max_capacity` int NOT NULL,
+  `created_by` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `created_by` (`created_by`),
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
+);
+```
+
+### Registrations Table
+```sql
+CREATE TABLE `registrations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `event_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `registration_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_registration` (`event_id`,`user_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+  CONSTRAINT `registrations_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+);
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is proprietary software developed for OLLYO.
+
+## 👥 Credits
+
+Built as a technical assessment task for OLLYO.
+
+## 📧 Support
+
+For support and queries, please contact the development team at [contact information].
