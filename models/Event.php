@@ -92,4 +92,45 @@ class Event
         exit();
     }
 
+    public function getFilteredEvents($search = '', $sort_by = 'date', $sort_order = 'ASC', $limit = 10, $offset = 0)
+    {
+        global $conn;
+
+        // Sanitize inputs
+        $search = "%{$search}%";
+        $allowed_sort_columns = ['name', 'date', 'time', 'location']; // Allowed columns for sorting
+        if (!in_array($sort_by, $allowed_sort_columns)) {
+            $sort_by = 'date';
+        }
+        $sort_order = strtoupper($sort_order) === 'DESC' ? 'DESC' : 'ASC';
+
+        // Prepare SQL query
+        $sql = "SELECT * FROM events 
+            WHERE name LIKE ? OR description LIKE ? 
+            ORDER BY $sort_by $sort_order 
+            LIMIT ? OFFSET ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssii", $search, $search, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function getTotalEvents($search = '')
+    {
+        global $conn;
+
+        $search = "%{$search}%";
+        $sql = "SELECT COUNT(*) as total FROM events WHERE name LIKE ? OR description LIKE ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $search, $search);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return $row['total'];
+    }
+
+
 }
