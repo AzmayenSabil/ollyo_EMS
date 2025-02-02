@@ -1,20 +1,22 @@
-# OLLYO Event Management System
+![2](https://github.com/user-attachments/assets/a7dd945e-dca5-428b-b322-c82e82eda4b3)# OLLYO Event Management System
 
 A comprehensive web-based event management system built with PHP and MySQL, designed to streamline event organization and attendee management.
 
 ## 📸 Screenshots
 
 ### Landing Page
-[Landing Page Screenshot to be added]
+![1](https://github.com/user-attachments/assets/b7fd765e-49da-46c5-bacf-382313189632)
+
 
 ### User Authentication
-[Login Page Screenshot to be added]
-[Register Page Screenshot to be added]
+![5](https://github.com/user-attachments/assets/5bf9ea33-66f3-4940-a256-78965fc8ca00)
+![6](https://github.com/user-attachments/assets/7b6d4e76-b2c7-4f70-9376-af731074065c)
 
 ### Event Management
-[Create Event Screenshot to be added]
-[View Event Screenshot to be added]
-[Edit Event Screenshot to be added]
+![2](https://github.com/user-attachments/assets/3e18de91-90d8-4de3-b1e7-ac714af6e53e)
+![3](https://github.com/user-attachments/assets/3932dc68-df66-4689-89a2-529c60246926)
+![4](https://github.com/user-attachments/assets/3e23a066-86cb-41ee-9c4e-a209d93cbfb6)
+
 
 ## ✨ Features
 
