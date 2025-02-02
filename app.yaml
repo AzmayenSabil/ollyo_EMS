@@ -1,0 +1,37 @@
+runtime: php82
+
+runtime_config:
+  document_root: .
+
+handlers:
+  - url: /css
+    static_dir: css
+
+  - url: /js
+    static_dir: js
+
+  - url: /images
+    static_dir: images
+
+  - url: /fonts
+    static_dir: fonts
+
+  - url: /favicon.ico
+    static_files: favicon.ico
+    upload: favicon.ico
+
+  - url: /.*\.(html|php|json|xml|txt|csv)
+    script: auto
+
+# Optional: For logging requests (can be useful for debugging)
+  - url: /.*  
+    script: auto
+
+entrypoint:
+  serve index.php
+
+env_variables:
+  CLOUDSQL_USER: 'root'
+  CLOUDSQL_DB: 'event_management'
+  CLOUDSQL_PASSWORD: 'admin'
+  CLOUDSQL_DSN: '/cloudsql/ollyoems:us-central1:ollyoapp'

@@ -1,30 +1,50 @@
 <?php
-// Database configuration constants
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', 'admin');
-define('DB_NAME', 'event_management');
+// Declare global variables for database connection and DB_NAME
+global $conn;
+global $DB_NAME;
 
-// Establish database connection
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
+// Check if the environment variable for Cloud SQL is set
+if (getenv('CLOUDSQL_DSN')) {
+    // Cloud SQL connection using environment variables
+    $dsn = getenv('CLOUDSQL_DSN');
+    $user = getenv('CLOUDSQL_USER');
+    $password = getenv('CLOUDSQL_PASSWORD');
+    $DB_NAME = getenv('CLOUDSQL_DB'); // Set DB_NAME from environment variable
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Create the Cloud SQL connection
+    $conn = new mysqli($dsn, $user, $password, $DB_NAME);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Cloud SQL connection failed: " . $conn->connect_error);
+    }
+} else {
+    // Local database configuration
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');
+    define('DB_PASS', 'admin');
+    define('DB_NAME', 'event_management'); // Declare DB_NAME globally
+
+    // Set global $DB_NAME
+    $DB_NAME = DB_NAME;
+
+    // Establish local database connection
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, $DB_NAME);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Local connection failed: " . $conn->connect_error);
+    }
 }
 
-// Create database if it doesn't exist
-$sql = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
-if ($conn->query($sql) === FALSE) {
-    die("Error creating database: " . $conn->error);
-}
+// Select the database (DB_NAME)
+$conn->select_db($DB_NAME);
 
-// Select the database
-$conn->select_db(DB_NAME);
-
-// Initialize tables
+// Initialize database and tables
 function initializeDatabase($conn)
 {
+    global $DB_NAME;  // Access global DB_NAME
+
     $queries = [
         "CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
