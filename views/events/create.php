@@ -1,7 +1,7 @@
 <?php
 include __DIR__ . '../../layouts/header.php'; ?>
 
-<div class="container mt-5">
+<div class="container mt-5 min-vh-100">
     <div class="card shadow-lg p-4 rounded">
         <h2 class="mb-4 text-center text-primary">Create Event</h2>
         <form method="POST" action="<?php echo $baseUrl; ?>/event/create">

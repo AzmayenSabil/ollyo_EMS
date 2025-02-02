@@ -1,97 +1,29 @@
 <?php include __DIR__ . '../../layouts/header.php'; ?>
 
-<style>
-
-
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    label {
-        font-weight: bold;
-        margin-bottom: 8px;
-        color: #555;
-    }
-
-    input,
-    textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    input[type="date"],
-    input[type="time"] {
-        font-size: 14px;
-    }
-
-    textarea {
-        min-height: 120px;
-        resize: vertical;
-    }
-
-    button {
-        width: 100%;
-        padding: 12px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            padding: 15px;
-        }
-
-        input,
-        textarea,
-        button {
-            font-size: 16px;
-        }
-    }
-</style>
-
-<div class="container">
-    <h2>Update Event</h2>
-    <form method="POST">
-        <div class="form-group">
-            <label for="name">Event Name:</label>
-            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($event['name']); ?>" required>
+<div class="container mt-5 min-vh-100">
+    <h2 class="text-center mb-4 text-primary">Update Event</h2>
+    <form method="POST" class="p-4 shadow rounded bg-light">
+        <div class="mb-3">
+            <label for="name" class="form-label fw-bold">Event Name:</label>
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($event['name']); ?>" class="form-control" required>
         </div>
-        <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($event['date']); ?>" required>
+        <div class="mb-3">
+            <label for="date" class="form-label fw-bold">Date:</label>
+            <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($event['date']); ?>" class="form-control" required>
         </div>
-        <div class="form-group">
-            <label for="time">Time:</label>
-            <input type="time" id="time" name="time" value="<?php echo htmlspecialchars($event['time']); ?>" required>
+        <div class="mb-3">
+            <label for="time" class="form-label fw-bold">Time:</label>
+            <input type="time" id="time" name="time" value="<?php echo htmlspecialchars($event['time']); ?>" class="form-control" required>
         </div>
-        <div class="form-group">
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($event['location']); ?>" required>
+        <div class="mb-3">
+            <label for="location" class="form-label fw-bold">Location:</label>
+            <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($event['location']); ?>" class="form-control" required>
         </div>
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea id="description" name="description"><?php echo htmlspecialchars($event['description']); ?></textarea>
+        <div class="mb-3">
+            <label for="description" class="form-label fw-bold">Description:</label>
+            <textarea id="description" name="description" class="form-control" rows="4"><?php echo htmlspecialchars($event['description']); ?></textarea>
         </div>
-        <button type="submit">Update Event</button>
+        <button type="submit" class="btn btn-success w-100">Update Event</button>
     </form>
 </div>
 

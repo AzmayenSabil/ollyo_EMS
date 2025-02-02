@@ -81,11 +81,14 @@ $total_pages = ceil($total_events / $limit);
         <nav>
             <ul class="pagination">
                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&sort_by=<?php echo $sort_by; ?>&sort_order=<?php echo $sort_order; ?>"><?php echo $i; ?></a>
+                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?> me-2">
+                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&sort_by=<?php echo $sort_by; ?>&sort_order=<?php echo $sort_order; ?>">
+                            <?php echo $i; ?>
+                        </a>
                     </li>
                 <?php endfor; ?>
             </ul>
+
         </nav>
     </div>
 </div>
