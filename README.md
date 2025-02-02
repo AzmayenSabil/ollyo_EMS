@@ -1,22 +1,6 @@
-![2](https://github.com/user-attachments/assets/a7dd945e-dca5-428b-b322-c82e82eda4b3)# OLLYO Event Management System
+# OLLYO Event Management System
 
 A comprehensive web-based event management system built with PHP and MySQL, designed to streamline event organization and attendee management.
-
-## 📸 Screenshots
-
-### Landing Page
-![1](https://github.com/user-attachments/assets/b7fd765e-49da-46c5-bacf-382313189632)
-
-
-### User Authentication
-![5](https://github.com/user-attachments/assets/5bf9ea33-66f3-4940-a256-78965fc8ca00)
-![6](https://github.com/user-attachments/assets/7b6d4e76-b2c7-4f70-9376-af731074065c)
-
-### Event Management
-![2](https://github.com/user-attachments/assets/3e18de91-90d8-4de3-b1e7-ac714af6e53e)
-![3](https://github.com/user-attachments/assets/3932dc68-df66-4689-89a2-529c60246926)
-![4](https://github.com/user-attachments/assets/3e23a066-86cb-41ee-9c4e-a209d93cbfb6)
-
 
 ## ✨ Features
 
@@ -180,17 +164,20 @@ CREATE TABLE `registrations` (
 );
 ```
 
-## 🤝 Contributing
+## 📸 Screenshots
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### Landing Page
+![1](https://github.com/user-attachments/assets/0949bcc0-de87-4eb3-a638-45fe308ef001)
 
-## 📝 License
+### User Authentication
+![5](https://github.com/user-attachments/assets/5bf9ea33-66f3-4940-a256-78965fc8ca00)
+![6](https://github.com/user-attachments/assets/7b6d4e76-b2c7-4f70-9376-af731074065c)
 
-This project is proprietary software developed for OLLYO.
+### Event Management
+![2](https://github.com/user-attachments/assets/3e18de91-90d8-4de3-b1e7-ac714af6e53e)
+![3](https://github.com/user-attachments/assets/3932dc68-df66-4689-89a2-529c60246926)
+![4](https://github.com/user-attachments/assets/3e23a066-86cb-41ee-9c4e-a209d93cbfb6)
+
 
 ## 👥 Credits
 
